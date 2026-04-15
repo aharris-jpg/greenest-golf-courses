@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>America’s Greenest Golf Courses Ranked (2026)</title>
+  <style>
+    :root{
+      --bg:#f4f6ef;
+      --card:#ffffff;
+      --ink:#0b1220;
+      --muted:#667085;
+      --line:rgba(11,18,32,0.08);
+      --line-strong:rgba(11,18,32,0.14);
+      --shadow:0 20px 50px rgba(11,18,32,0.08);
+      --chip:#eef2e8;
+      --soft:#f8faf5;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:radial-gradient(circle at top, #fafbf7 0%, var(--bg) 58%);
+      color:var(--ink);
+      padding:20px 14px 28px;
+    }
+    .wrap{ max-width:1180px; margin:0 auto; }
+    .hero{ text-align:center; margin:0 0 16px; }
+    .eyebrow{
+      margin:0 0 8px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#4f5f3f;
+    }
+    .title{
+      margin:0;
+      font-size:clamp(28px,3.8vw,48px);
+      line-height:1.02;
+      letter-spacing:-0.04em;
+      font-weight:950;
+    }
+    .subtitle{
+      margin:10px auto 0;
+      max-width:860px;
+      font-size:15px;
+      line-height:1.45;
+      color:var(--muted);
+      font-weight:650;
+      min-height:0;
+    }
+    .hero-stat{
+      margin:12px auto 0;
+      max-width:860px;
+      font-size:14px;
+      line-height:1.35;
+      color:#32412a;
+      font-weight:900;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid rgba(11,18,32,0.08);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      justify-content:space-between;
+      align-items:end;
+      padding:16px 18px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg,#fbfcf8 0%, #f8faf5 100%);
+    }
+    .filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:end;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .field label{
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .field input, .field select{
+      height:40px;
+      min-width:160px;
+      padding:0 12px;
+      border:1px solid var(--line-strong);
+      border-radius:10px;
+      background:#fff;
+      color:var(--ink);
+      font-size:14px;
+      font-weight:700;
+      outline:none;
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+    .field input:focus, .field select:focus{
+      border-color:#7aaa4d;
+      box-shadow:0 0 0 3px rgba(122,170,77,0.14);
+    }
+    .field input.search{ min-width:260px; }
+
+    .summary{
+      font-size:13px;
+      font-weight:800;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .table-wrap{ overflow:auto; }
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      min-width:1060px;
+    }
+    thead th{
+      position:sticky;
+      top:0;
+      z-index:2;
+      background:#fbfcf8;
+      border-bottom:1px solid var(--line);
+      padding:14px 14px;
+      font-size:11px;
+      font-weight:900;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      text-align:left;
+      white-space:nowrap;
+    }
+    thead th.sortable{ cursor:pointer; user-select:none; }
+    thead th.sortable:hover{ color:var(--ink); }
+    tbody td{
+      padding:16px 14px;
+      border-bottom:1px solid var(--line);
+      vertical-align:middle;
+      background:#fff;
+    }
+    tbody tr{
+      background:linear-gradient(90deg, rgba(120,180,80,0.038), rgba(120,180,80,0) 24%);
+    }
+    tbody tr:nth-child(-n+3){
+      background:linear-gradient(90deg, rgba(126,174,77,0.11), rgba(126,174,77,0.025) 26%, rgba(126,174,77,0) 52%);
+    }
+    tbody tr:hover td{ background:#fcfdf9; }
+
+    .rank{
+      font-size:20px;
+      font-weight:950;
+      letter-spacing:-.04em;
+      line-height:1;
+      opacity:.86;
+    }
+    tbody tr:first-child .rank{
+      font-size:24px;
+      color:#2f7d32;
+      opacity:1;
+    }
+    .course{
+      font-size:17px;
+      font-weight:950;
+      line-height:1.12;
+      margin:0;
+    }
+    .course-sub{
+      margin-top:4px;
+      font-size:11px;
+      font-weight:800;
+      color:var(--muted);
+      opacity:.62;
+    }
+    .city,.state,.region{
+      font-size:14px;
+      font-weight:800;
+      color:#243041;
+    }
+    .region-chip{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .region-chip[data-region="South"]{ background:#e8f3e6; color:#2f6b2f; }
+    .region-chip[data-region="West"]{ background:#e6f0f3; color:#2c5e6b; }
+    .region-chip[data-region="Midwest"]{ background:#f0efe6; color:#6b642c; }
+    .region-chip[data-region="Northeast"]{ background:#efe6f3; color:#5b2c6b; }
+
+    .bar-wrap{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:280px;
+    }
+    .swatch{
+      width:22px;
+      height:22px;
+      border-radius:6px;
+      border:1px solid rgba(11,18,32,0.16);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.24);
+      flex:0 0 auto;
+    }
+    .bar-shell{
+      position:relative;
+      flex:1 1 auto;
+      height:24px;
+      min-width:220px;
+      background:#edf1e8;
+      border:1px solid rgba(11,18,32,0.06);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar{
+      position:absolute;
+      inset:0 auto 0 0;
+      border-radius:999px;
+      box-shadow:inset 0 1px 2px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.2);
+    }
+    .bar-score{
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:11px;
+      font-weight:900;
+      color:#0b1220;
+      letter-spacing:.01em;
+    }
+
+    .score{
+      font-size:28px;
+      font-weight:950;
+      letter-spacing:-.04em;
+      line-height:1;
+      text-align:right;
+    }
+    .score small{
+      display:none;
+    }
+
+    .pagination{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:16px 18px;
+      background:#fbfcf8;
+    }
+    .pager-info{
+      font-size:13px;
+      font-weight:800;
+      color:var(--muted);
+    }
+    .pager-actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    button{
+      height:40px;
+      padding:0 14px;
+      border:none;
+      border-radius:12px;
+      background:#0b1220;
+      color:#fff;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    }
+    button.secondary{
+      background:#e9edf3;
+      color:#0b1220;
+    }
+    button:hover:not(:disabled){
+      transform:translateY(-1px);
+      box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    button:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    .under{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      padding:14px 18px 18px;
+      border-top:1px solid var(--line);
+      background:#fff;
+      align-items:flex-end;
+    }
+    .note{
+      margin:0;
+      max-width:740px;
+      font-size:13px;
+      line-height:1.4;
+      color:#435063;
+      font-weight:820;
+    }
+    .note b{ color:var(--ink); font-weight:950; }
+    .credit{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+      color:rgba(11,18,32,0.55);
+      white-space:nowrap;
+      text-align:right;
+    }
+    .credit img{
+      display:block;
+      height:40px;
+      margin-top:6px;
+      margin-left:auto;
+      width:auto;
+    }
+
+    @media (max-width:900px){
+      .controls{ align-items:stretch; }
+      .summary{ white-space:normal; }
+      .field input.search{ min-width:220px; }
+      .under{ align-items:flex-start; }
+      .credit{ text-align:left; }
+      .credit img{ margin-left:0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <p class="eyebrow">Vegas Insider ranking</p>
+      <h1 class="title">America’s Greenest Golf Courses Ranked (2026)</h1>
+            <p class="subtitle"></p>
+    </div>
+
+    <div class="card">
+      <div class="controls">
+        <div class="filters">
+          <div class="field">
+            <label for="search">Search course</label>
+            <input id="search" class="search" type="text" placeholder="Search by course name" />
+          </div>
+          <div class="field">
+            <label for="stateFilter">State</label>
+            <select id="stateFilter"><option value="">All states</option></select>
+          </div>
+          <div class="field">
+            <label for="regionFilter">Region</label>
+            <select id="regionFilter">
+              <option value="">All regions</option>
+              <option value="South">South</option>
+              <option value="Midwest">Midwest</option>
+              <option value="Northeast">Northeast</option>
+              <option value="West">West</option>
+            </select>
+          </div>
+        </div>
+        <div class="summary" id="summary"></div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="rank">Rank</th>
+              <th class="sortable" data-sort="course">Course</th>
+              <th class="sortable" data-sort="city">Town</th>
+              <th class="sortable" data-sort="state">State</th>
+              <th>Turf shade + score bar</th>
+              <th class="sortable" data-sort="region">Region</th>
+              <th class="sortable" data-sort="score">Score</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <div class="pager-info" id="pagerInfo"></div>
+        <div class="pager-actions">
+          <button class="secondary" id="prevBtn">← Previous</button>
+          <button class="secondary" id="nextBtn">Next →</button>
+        </div>
+      </div>
+
+      <div class="under">
+        <p class="note"><b>Takeaway:</b> The greenest courses aren’t just maintained — they’re engineered to perfection.<br/><span style="font-weight:700; color:#667085;">Methodology: Satellite RGB analysis of 123 U.S. golf courses vs. an ideal turf benchmark (70,170,70). Source: Vegas Insider, April 2026.</span></p>
+        <div class="credit">
+          Created by: VegasInsider.com
+          <img src="https://i.postimg.cc/CMn3qBSN/download.png" alt="Vegas Insider logo" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const data = [
+      ["Augusta National GC","Augusta","Georgia",68,172,67,91.83,"South"],
+      ["Pebble Beach GL","Pebble Beach","California",74,162,82,70.36,"West"],
+      ["Pinehurst No. 2","Pinehurst","North Carolina",88,152,80,45.83,"South"],
+      ["TPC Sawgrass","Ponte Vedra","Florida",71,168,72,94.06,"South"],
+      ["Bethpage Black","Farmingdale","New York",78,158,84,60.19,"Northeast"],
+      ["Torrey Pines (South)","San Diego","California",70,165,75,85.99,"West"],
+      ["Oakmont CC","Oakmont","Pennsylvania",82,160,76,66.86,"Northeast"],
+      ["Winged Foot (West)","Mamaroneck","New York",75,163,77,78.03,"Northeast"],
+      ["Shinnecock Hills","Southampton","New York",98,142,90,12.13,"Northeast"],
+      ["Kiawah Island (Ocean)","Kiawah Is.","South Carolina",92,148,88,28.81,"South"],
+      ["Pine Valley GC","Pine Valley","New Jersey",72,164,68,86.86,"Northeast"],
+      ["Cypress Point Club","Pebble Beach","California",78,158,85,58.78,"West"],
+      ["Merion GC (East)","Ardmore","Pennsylvania",75,166,73,85.99,"Northeast"],
+      ["National Golf Links","Southampton","New York",95,145,92,17.52,"Northeast"],
+      ["Fishers Island Club","Fishers Is.","New York",80,155,82,57.11,"Northeast"],
+      ["Crystal Downs CC","Frankfort","Michigan",84,158,79,59.36,"Midwest"],
+      ["Baltusrol (Lower)","Springfield","New Jersey",74,168,72,90.30,"Northeast"],
+      ["Seminole GC","Juno Beach","Florida",78,165,74,79.70,"South"],
+      ["Riviera CC","Pac. Palisades","California",71,169,70,97.20,"West"],
+      ["Chicago Golf Club","Wheaton","Illinois",82,162,75,69.77,"Midwest"],
+      ["LACC (North)","Los Angeles","California",72,167,71,92.59,"West"],
+      ["LACC (South)","Los Angeles","California",73,166,72,89.33,"West"],
+      ["Oak Hill CC (East)","Rochester","New York",72,168,71,94.06,"Northeast"],
+      ["Sand Hills GC","Mullen","Nebraska",102,140,95,0.00,"Midwest"],
+      ["Whistling Straits","Kohler","Wisconsin",94,144,91,18.50,"Midwest"],
+      ["Erin Hills","Hartford","Wisconsin",88,152,85,41.48,"Midwest"],
+      ["Bandon Dunes","Bandon","Oregon",96,140,94,8.12,"West"],
+      ["Pacific Dunes","Bandon","Oregon",98,138,96,1.28,"West"],
+      ["Bandon Trails","Bandon","Oregon",85,155,82,51.73,"West"],
+      ["Old Macdonald","Bandon","Oregon",94,142,88,18.72,"West"],
+      ["Sheep Ranch","Bandon","Oregon",90,145,85,29.97,"West"],
+      ["Chambers Bay","University Place","Washington",88,150,82,41.65,"West"],
+      ["Olympic Club (Lake)","San Francisco","California",72,168,74,90.30,"West"],
+      ["Spyglass Hill","Pebble Beach","California",76,162,80,71.99,"West"],
+      ["Harbour Town","Hilton Head","South Carolina",74,165,72,86.71,"South"],
+      ["Sea Island (Seaside)","St. Simons","Georgia",78,160,76,71.99,"South"],
+      ["Streamsong Red","Bowling Green","Florida",85,155,80,53.55,"South"],
+      ["Streamsong Blue","Bowling Green","Florida",84,156,82,54.14,"South"],
+      ["Streamsong Black","Bowling Green","Florida",82,158,79,61.95,"South"],
+      ["TPC Scottsdale","Scottsdale","Arizona",62,178,62,72.55,"West"],
+      ["We-Ko-Pa (Saguaro)","Fort McDowell","Arizona",75,162,70,81.31,"West"],
+      ["French Lick (Dye)","French Lick","Indiana",72,168,71,94.06,"Midwest"],
+      ["The Greenbrier","White Sulphur","West Virginia",70,172,70,96.04,"South"],
+      ["Hazeltine National","Chaska","Minnesota",74,166,73,87.32,"Midwest"],
+      ["Medinah (No. 3)","Medinah","Illinois",71,169,71,96.57,"Midwest"],
+      ["Muirfield Village","Dublin","Ohio",69,171,69,96.57,"Midwest"],
+      ["Colonial CC","Fort Worth","Texas",76,164,74,81.42,"South"],
+      ["Southern Hills","Tulsa","Oklahoma",72,168,72,93.14,"South"],
+      ["Quail Hollow Club","Charlotte","North Carolina",70,171,70,98.02,"South"],
+      ["East Lake GC","Atlanta","Georgia",71,170,69,97.20,"South"],
+      ["Innisbrook (Copper)","Palm Harbor","Florida",72,168,72,93.14,"South"],
+      ["Bay Hill Club","Orlando","Florida",73,166,74,87.32,"South"],
+      ["TPC River Highlands","Cromwell","Connecticut",75,165,75,82.85,"Northeast"],
+      ["TPC Deere Run","Silvis","Illinois",77,163,76,77.07,"Midwest"],
+      ["TPC Boston","Norton","Massachusetts",73,167,73,89.71,"Northeast"],
+      ["TPC Twin Cities","Blaine","Minnesota",76,164,76,79.42,"Midwest"],
+      ["TPC Louisiana","Avondale","Louisiana",75,165,74,83.91,"South"],
+      ["TPC San Antonio","San Antonio","Texas",80,160,78,67.82,"South"],
+      ["Kapalua Plantation","Lahaina","Hawaii",72,168,75,88.62,"West"],
+      ["Kapalua Bay Course","Lahaina","Hawaii",71,168,74,90.92,"West"],
+      ["Princeville Makai","Princeville","Hawaii",70,171,75,89.90,"West"],
+      ["Mauna Kea GC","Kamuela","Hawaii",75,165,78,78.85,"West"],
+      ["Pasatiempo GC","Santa Cruz","California",79,158,76,68.00,"West"],
+      ["Tobacco Road GC","Sanford","North Carolina",88,152,82,44.26,"South"],
+      ["Arcadia Bluffs","Arcadia","Michigan",84,155,80,54.79,"Midwest"],
+      ["Arcadia Bluffs (South Course)","Arcadia","Michigan",74,166,72,88.12,"Midwest"],
+      ["Shadow Creek","Las Vegas","Nevada",65,175,68,85.45,"West"],
+      ["Cascata Golf Club","Boulder City","Nevada",68,172,65,88.62,"West"],
+      ["Wolf Creek GC","Mesquite","Nevada",60,180,60,65.69,"West"],
+      ["Sand Hollow Resort","Hurricane","Utah",78,160,72,74.33,"West"],
+      ["Entrada at Snow Canyon","St. George","Utah",74,165,70,87.32,"West"],
+      ["The Broadmoor","Colorado Spr.","Colorado",76,162,75,77.86,"West"],
+      ["Castle Pines GC","Castle Rock","Colorado",73,166,74,87.32,"West"],
+      ["Cherry Hills CC","Cherry Hills","Colorado",72,168,72,93.14,"West"],
+      ["Bellerive CC","Town & Country","Missouri",74,165,73,85.99,"Midwest"],
+      ["Shoal Creek Club","Birmingham","Alabama",71,169,69,96.57,"South"],
+      ["Greystone G&CC","Birmingham","Alabama",73,167,71,91.37,"South"],
+      ["RTJ (Grand Nat.)","Opelika","Alabama",75,163,74,81.21,"South"],
+      ["Harbour Town Golf Links (Sea Pines Resort)","Hilton Head","South Carolina",73,167,72,90.71,"South"],
+      ["Caledonia G&FC","Pawleys Island","South Carolina",70,171,71,97.20,"South"],
+      ["Kiawah (Cassique)","Kiawah Island","South Carolina",76,164,75,80.49,"South"],
+      ["Pine Needles","Southern Pines","North Carolina",82,158,76,64.35,"South"],
+      ["Mid Pines Inn","Southern Pines","North Carolina",84,156,78,57.70,"South"],
+      ["Old Town Club","Winston-Salem","North Carolina",78,162,76,74.63,"South"],
+      ["Sedgefield CC","Greensboro","North Carolina",71,168,70,95.57,"South"],
+      ["Congressional CC","Bethesda","Maryland",69,171,69,96.57,"South"],
+      ["Baltimore CC","Timonium","Maryland",75,165,74,83.91,"South"],
+      ["Aronimink GC","Newtown Sq.","Pennsylvania",72,168,72,93.14,"Northeast"],
+      ["Saucon Valley CC","Bethlehem","Pennsylvania",76,164,75,80.49,"Northeast"],
+      ["Philly Cricket Club","Flourtown","Pennsylvania",72,168,72,93.14,"Northeast"],
+      ["The Country Club","Brookline","Massachusetts",69,171,68,95.15,"Northeast"],
+      ["Essex County Club","Manchester","Massachusetts",75,165,74,83.91,"Northeast"],
+      ["Myopia Hunt Club","Hamilton","Massachusetts",84,158,80,58.45,"Northeast"],
+      ["Old Sandwich GC","Plymouth","Massachusetts",78,162,76,74.63,"Northeast"],
+      ["Sankaty Head Golf Club","Siasconset","Massachusetts",95,145,92,17.52,"Northeast"],
+      ["Yale Golf Course","New Haven","Connecticut",82,158,80,60.99,"Northeast"],
+      ["Sleepy Hollow CC","Scarborough","New York",71,169,71,96.57,"Northeast"],
+      ["Friar’s Head","Baiting Hollow","New York",88,152,85,41.48,"Northeast"],
+      ["Sebonack GC","Southampton","New York",85,155,82,51.73,"Northeast"],
+      ["Garden City Golf Club","Garden City","New York",75,164,72,84.03,"Northeast"],
+      ["Glen Oaks Club","Old Westbury","New York",68,172,68,93.14,"Northeast"],
+      ["Trump Bedminster","Bedminster","New Jersey",70,171,70,98.02,"Northeast"],
+      ["Liberty National","Jersey City","New Jersey",68,173,69,92.59,"Northeast"],
+      ["Plainfield CC","Edison","New Jersey",74,166,73,87.32,"Northeast"],
+      ["Somerset Hills CC","Bernardsville","New Jersey",76,164,75,80.49,"Northeast"],
+      ["Interlachen CC","Edina","Minnesota",72,168,71,94.06,"Midwest"],
+      ["Minikahda Club","Minneapolis","Minnesota",71,169,71,96.57,"Midwest"],
+      ["Camargo Club","Cincinnati","Ohio",70,171,70,98.02,"Midwest"],
+      ["The Golf Club","New Albany","Ohio",74,166,73,87.32,"Midwest"],
+      ["Inverness Club","Toledo","Ohio",73,167,73,89.71,"Midwest"],
+      ["Firestone (South)","Akron","Ohio",70,170,70,100.00,"Midwest"],
+      ["Valhalla GC","Louisville","Kentucky",69,171,69,96.57,"South"],
+      ["Keene Trace Golf Club","Nicholasville","Kentucky",76,164,74,81.42,"South"],
+      ["TPC Southwind","Memphis","Tennessee",72,168,72,93.14,"South"],
+      ["The Honors Course","Ooltewah","Tennessee",72,168,72,93.14,"South"],
+      ["Atlanta Ath. Club","Johns Creek","Georgia",70,171,70,98.02,"South"],
+      ["Reynolds Lake Oconee","Greensboro","Georgia",71,170,70,98.02,"South"],
+      ["Sea Island (Plantation Course)","St. Simons Island","Georgia",75,165,74,83.91,"South"],
+      ["Oakland Hills (S)","Bloomfield","Michigan",73,167,72,90.71,"Midwest"],
+      ["Detroit Golf Club","Detroit","Michigan",75,165,74,83.91,"Midwest"],
+      ["Prairie Dunes CC","Hutchinson","Kansas",92,148,88,28.81,"Midwest"],
+      ["Flint Hills Nat.","Andover","Kansas",75,165,74,83.91,"Midwest"]
+    ].map(d => ({
+      course:d[0], city:d[1], state:d[2], r:d[3], g:d[4], b:d[5], score:d[6], region:d[7], turf:`rgb(${d[3]}, ${d[4]}, ${d[5]})`
+    }));
+
+    data.sort((a,b) => b.score - a.score || a.course.localeCompare(b.course));
+    data.forEach((d,i) => d.rank = i + 1);
+
+    const pageSize = 10;
+    let currentPage = 1;
+    let currentSort = { key: 'rank', dir: 'asc' };
+
+    const search = document.getElementById('search');
+    const stateFilter = document.getElementById('stateFilter');
+    const regionFilter = document.getElementById('regionFilter');
+    const rows = document.getElementById('rows');
+    const summary = document.getElementById('summary');
+    const pagerInfo = document.getElementById('pagerInfo');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    const uniqueStates = [...new Set(data.map(d => d.state))].sort((a,b) => a.localeCompare(b));
+    uniqueStates.forEach(state => {
+      const opt = document.createElement('option');
+      opt.value = state;
+      opt.textContent = state;
+      stateFilter.appendChild(opt);
+    });
+
+    function barColor(score){
+      if (score >= 97) return '#2f7d32';
+      if (score >= 93) return '#4ba746';
+      if (score >= 85) return '#79bd45';
+      if (score >= 75) return '#a5c94a';
+      if (score >= 60) return '#d2c54d';
+      if (score >= 40) return '#c9a241';
+      return '#a97634';
+    }
+
+    function filteredData(){
+      const q = search.value.trim().toLowerCase();
+      return data.filter(d => {
+        const matchSearch = !q || d.course.toLowerCase().includes(q);
+        const matchState = !stateFilter.value || d.state === stateFilter.value;
+        const matchRegion = !regionFilter.value || d.region === regionFilter.value;
+        return matchSearch && matchState && matchRegion;
+      });
+    }
+
+    function sortData(items){
+      const arr = [...items];
+      arr.sort((a,b) => {
+        let val = 0;
+        if (currentSort.key === 'rank') val = a.rank - b.rank;
+        if (currentSort.key === 'score') val = a.score - b.score;
+        if (currentSort.key === 'course') val = a.course.localeCompare(b.course);
+        if (currentSort.key === 'city') val = a.city.localeCompare(b.city);
+        if (currentSort.key === 'state') val = a.state.localeCompare(b.state);
+        if (currentSort.key === 'region') val = a.region.localeCompare(b.region);
+        return currentSort.dir === 'asc' ? val : -val;
+      });
+      return arr;
+    }
+
+    function render(){
+      const filtered = sortData(filteredData());
+      const total = filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * pageSize;
+      const end = Math.min(start + pageSize, total);
+      const pageItems = filtered.slice(start, end);
+
+      rows.innerHTML = pageItems.map((d, idx) => `
+        <tr>
+          <td><div class="rank">#${d.rank}</div></td>
+          <td>
+            <div class="course">${d.course}</div>
+            
+          </td>
+          <td><div class="city">${d.city}</div></td>
+          <td><div class="state">${d.state}</div></td>
+          <td>
+            <div class="bar-wrap">
+              <span class="swatch" style="background:${d.turf}"></span>
+              <div class="bar-shell">
+                <div class="bar" style="width:${d.score}%; background:linear-gradient(90deg, rgba(255,255,255,0.25), rgba(0,0,0,0.15)), ${barColor(d.score)};"></div>
+                <div class="bar-score">${d.score.toFixed(2)}</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="region-chip" data-region="${d.region}">${d.region}</span></td>
+          <td><div class="score">${d.score.toFixed(2)}<small>Green Score</small></div></td>
+        </tr>
+      `).join('');
+
+      summary.textContent = `${total} courses · Page ${currentPage} of ${totalPages}`;
+      pagerInfo.textContent = total ? `Showing ${start + 1}–${end} of ${total}` : 'No courses found';
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages || total === 0;
+    }
+
+    [search, stateFilter, regionFilter].forEach(el => {
+      el.addEventListener('input', () => { currentPage = 1; render(); });
+      el.addEventListener('change', () => { currentPage = 1; render(); });
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) { currentPage--; render(); }
+    });
+    nextBtn.addEventListener('click', () => {
+      if (!nextBtn.disabled) { currentPage++; render(); }
+    });
+
+    document.querySelectorAll('th.sortable').forEach(th => {
+      th.addEventListener('click', () => {
+        const key = th.dataset.sort;
+        if (currentSort.key === key) {
+          currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+        } else {
+          currentSort = { key, dir: key === 'rank' ? 'asc' : 'asc' };
+        }
+        currentPage = 1;
+        render();
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>
