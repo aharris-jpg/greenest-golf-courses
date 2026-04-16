@@ -12,7 +12,7 @@
       --muted:#667085;
       --line:rgba(11,18,32,0.08);
       --line-strong:rgba(11,18,32,0.14);
-      --shadow:0 14px 34px rgba(11,18,32,0.07);
+      --shadow:0 12px 28px rgba(11,18,32,0.07);
     }
 
     *{ box-sizing:border-box; }
@@ -22,17 +22,17 @@
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
       background:radial-gradient(circle at top, #fafbf7 0%, var(--bg) 58%);
       color:var(--ink);
-      padding:12px 10px 16px;
+      padding:10px 8px 14px;
     }
 
     .wrap{
-      max-width:1080px;
+      max-width:1000px;
       margin:0 auto;
     }
 
     .hero{
       text-align:center;
-      margin:0 0 10px;
+      margin:0 0 8px;
     }
 
     .eyebrow{
@@ -46,8 +46,8 @@
 
     .title{
       margin:0;
-      font-size:clamp(24px,3.3vw,40px);
-      line-height:1.03;
+      font-size:clamp(22px,3vw,34px);
+      line-height:1.04;
       letter-spacing:-0.04em;
       font-weight:900;
     }
@@ -55,7 +55,7 @@
     .card{
       background:var(--card);
       border:1px solid rgba(11,18,32,0.08);
-      border-radius:16px;
+      border-radius:14px;
       box-shadow:var(--shadow);
       overflow:hidden;
     }
@@ -63,10 +63,10 @@
     .controls{
       display:flex;
       flex-wrap:wrap;
-      gap:10px;
+      gap:8px;
       justify-content:space-between;
       align-items:end;
-      padding:10px 12px;
+      padding:8px 10px;
       border-bottom:1px solid var(--line);
       background:linear-gradient(180deg,#fbfcf8 0%, #f8faf5 100%);
     }
@@ -94,14 +94,14 @@
 
     .field input,
     .field select{
-      height:34px;
-      min-width:140px;
-      padding:0 10px;
+      height:32px;
+      min-width:128px;
+      padding:0 9px;
       border:1px solid var(--line-strong);
       border-radius:8px;
       background:#fff;
       color:var(--ink);
-      font-size:13px;
+      font-size:12px;
       font-weight:600;
       outline:none;
       transition:border-color .15s ease, box-shadow .15s ease;
@@ -114,11 +114,11 @@
     }
 
     .field input.search{
-      min-width:220px;
+      min-width:190px;
     }
 
     .summary{
-      font-size:12px;
+      font-size:11px;
       font-weight:700;
       color:#788396;
       white-space:nowrap;
@@ -132,7 +132,7 @@
       width:100%;
       border-collapse:separate;
       border-spacing:0;
-      min-width:980px;
+      min-width:860px;
     }
 
     thead th{
@@ -141,7 +141,7 @@
       z-index:2;
       background:#fbfcf8;
       border-bottom:1px solid var(--line);
-      padding:10px 10px;
+      padding:8px 8px;
       font-size:10px;
       font-weight:800;
       color:var(--muted);
@@ -161,18 +161,18 @@
     }
 
     tbody td{
-      padding:10px 10px;
+      padding:8px 8px;
       border-bottom:1px solid var(--line);
       vertical-align:middle;
       background:#fff;
     }
 
     tbody tr{
-      background:linear-gradient(90deg, rgba(120,180,80,0.03), rgba(120,180,80,0) 22%);
+      background:linear-gradient(90deg, rgba(120,180,80,0.025), rgba(120,180,80,0) 20%);
     }
 
     tbody tr:nth-child(-n+3){
-      background:linear-gradient(90deg, rgba(126,174,77,0.08), rgba(126,174,77,0.02) 24%, rgba(126,174,77,0) 46%);
+      background:linear-gradient(90deg, rgba(126,174,77,0.07), rgba(126,174,77,0.015) 20%, rgba(126,174,77,0) 42%);
     }
 
     tbody tr:hover td{
@@ -180,30 +180,30 @@
     }
 
     .rank{
-      font-size:15px;
-      font-weight:850;
+      font-size:14px;
+      font-weight:800;
       letter-spacing:-.02em;
       line-height:1;
       color:#1c2432;
     }
 
     tbody tr:first-child .rank{
-      font-size:18px;
+      font-size:17px;
       color:#2f7d32;
       font-weight:900;
     }
 
     .course{
-      font-size:14px;
+      font-size:13px;
       font-weight:800;
-      line-height:1.12;
+      line-height:1.1;
       margin:0;
       color:#0f1728;
     }
 
     .city,
     .state{
-      font-size:12px;
+      font-size:11px;
       font-weight:600;
       color:#516072;
     }
@@ -211,7 +211,7 @@
     .region-chip{
       display:inline-flex;
       align-items:center;
-      padding:4px 8px;
+      padding:4px 7px;
       border-radius:999px;
       font-size:10px;
       font-weight:700;
@@ -226,13 +226,13 @@
     .bar-wrap{
       display:flex;
       align-items:center;
-      gap:8px;
-      min-width:220px;
+      gap:6px;
+      min-width:170px;
     }
 
     .swatch{
-      width:16px;
-      height:16px;
+      width:14px;
+      height:14px;
       border-radius:4px;
       border:1px solid rgba(11,18,32,0.12);
       box-shadow:inset 0 0 0 1px rgba(255,255,255,0.24);
@@ -241,9 +241,9 @@
 
     .bar-shell{
       position:relative;
-      flex:1 1 auto;
-      height:18px;
-      min-width:180px;
+      flex:0 0 140px;
+      width:140px;
+      height:16px;
       background:#edf1e8;
       border:1px solid rgba(11,18,32,0.05);
       border-radius:999px;
@@ -254,22 +254,22 @@
       position:absolute;
       inset:0 auto 0 0;
       border-radius:999px;
-      box-shadow:inset 0 1px 2px rgba(255,255,255,0.35), inset 0 -2px 3px rgba(0,0,0,0.16);
+      box-shadow:inset 0 1px 2px rgba(255,255,255,0.35), inset 0 -2px 3px rgba(0,0,0,0.14);
     }
 
     .bar-score{
       position:absolute;
-      right:8px;
+      right:6px;
       top:50%;
       transform:translateY(-50%);
-      font-size:10px;
+      font-size:9px;
       font-weight:700;
       color:#162033;
       letter-spacing:.01em;
     }
 
     .score{
-      font-size:20px;
+      font-size:18px;
       font-weight:800;
       letter-spacing:-.02em;
       line-height:1;
@@ -277,39 +277,35 @@
       color:#0f1728;
     }
 
-    .score small{
-      display:none;
-    }
-
     .pagination{
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:10px;
-      padding:10px 12px;
+      gap:8px;
+      padding:8px 10px;
       background:#fbfcf8;
     }
 
     .pager-info{
-      font-size:12px;
+      font-size:11px;
       font-weight:700;
       color:#7a8598;
     }
 
     .pager-actions{
       display:flex;
-      gap:8px;
+      gap:6px;
       align-items:center;
     }
 
     button{
-      height:34px;
-      padding:0 12px;
+      height:30px;
+      padding:0 10px;
       border:none;
-      border-radius:10px;
+      border-radius:8px;
       background:#0b1220;
       color:#fff;
-      font-size:13px;
+      font-size:12px;
       font-weight:800;
       cursor:pointer;
       transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
@@ -322,7 +318,7 @@
 
     button:hover:not(:disabled){
       transform:translateY(-1px);
-      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+      box-shadow:0 4px 10px rgba(0,0,0,0.08);
     }
 
     button:disabled{
@@ -333,9 +329,9 @@
     .under{
       display:flex;
       justify-content:space-between;
-      gap:10px;
+      gap:8px;
       flex-wrap:wrap;
-      padding:10px 12px 12px;
+      padding:8px 10px 10px;
       border-top:1px solid var(--line);
       background:#fff;
       align-items:flex-end;
@@ -343,8 +339,8 @@
 
     .note{
       margin:0;
-      max-width:680px;
-      font-size:11px;
+      max-width:620px;
+      font-size:10px;
       line-height:1.35;
       color:#5a6678;
       font-weight:700;
@@ -356,7 +352,7 @@
     }
 
     .credit{
-      font-size:10px;
+      font-size:9px;
       font-weight:700;
       letter-spacing:.03em;
       text-transform:uppercase;
@@ -367,7 +363,7 @@
 
     .credit img{
       display:block;
-      height:30px;
+      height:26px;
       margin-top:4px;
       margin-left:auto;
       width:auto;
@@ -375,7 +371,7 @@
 
     @media (max-width:900px){
       body{
-        padding:8px 6px 12px;
+        padding:6px 4px 10px;
       }
 
       .controls{
@@ -387,7 +383,7 @@
       }
 
       .field input.search{
-        min-width:180px;
+        min-width:160px;
       }
 
       .under{
@@ -409,7 +405,6 @@
     <div class="hero">
       <p class="eyebrow">Vegas Insider ranking</p>
       <h1 class="title">America’s Greenest Golf Courses Ranked (2026)</h1>
-      <p class="subtitle"></p>
     </div>
 
     <div class="card">
@@ -445,7 +440,7 @@
               <th class="sortable" data-sort="course">Course</th>
               <th class="sortable" data-sort="city">Town</th>
               <th class="sortable" data-sort="state">State</th>
-              <th>Turf shade + score bar</th>
+              <th>Turf</th>
               <th class="sortable" data-sort="region">Region</th>
               <th class="sortable" data-sort="score">Score</th>
             </tr>
