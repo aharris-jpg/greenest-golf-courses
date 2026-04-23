@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top 10 Greenest Golf Courses (2026)</title>
+
+<style>
+:root{
+  --bg:#f2f6ef;
+  --card:#ffffff;
+  --ink:#143222;
+  --muted:#637364;
+  --line:#e3eadf;
+  --green-dark:#1f5d33;
+  --green-mid:#3e8a45;
+  --green-light:#7fbd67;
+  --green-row:#f8fbf6;
+  --green-top:#f3faef;
+  --gold:#d3b35c;
+  --score-bg:#eef5ea;
+  --score-border:#c9dcc4;
+  --shadow:0 18px 38px rgba(20,50,34,0.08);
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:radial-gradient(circle at top, #f8fbf5 0%, var(--bg) 60%);
+  padding:20px;
+}
+
+.wrap{
+  max-width:680px;
+  margin:auto;
+}
+
+.header{
+  background:linear-gradient(90deg,var(--green-dark),var(--green-mid) 60%,var(--green-light));
+  color:#fff;
+  padding:18px 18px 16px;
+  border-radius:18px 18px 0 0;
+  position:relative;
+  overflow:hidden;
+}
+
+.header::after{
+  content:"";
+  position:absolute;
+  right:-38px;
+  top:-38px;
+  width:140px;
+  height:140px;
+  background:rgba(255,255,255,0.08);
+  border-radius:50%;
+}
+
+.eyebrow{
+  margin:0 0 5px;
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:700;
+  opacity:.92;
+  position:relative;
+  z-index:1;
+}
+
+.header h1{
+  margin:0;
+  font-size:24px;
+  line-height:1.08;
+  font-weight:900;
+  letter-spacing:-0.02em;
+  position:relative;
+  z-index:1;
+}
+
+.subhead{
+  margin-top:7px;
+  font-size:13px;
+  color:rgba(255,255,255,0.9);
+  line-height:1.35;
+  position:relative;
+  z-index:1;
+}
+
+.callout{
+  margin-top:10px;
+  display:inline-block;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.18);
+  color:#fff;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  position:relative;
+  z-index:1;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-top:none;
+  border-radius:0 0 18px 18px;
+  box-shadow:var(--shadow);
+}
+
+.rows{
+  padding:12px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:48px 1fr 84px;
+  gap:12px;
+  align-items:center;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  margin-bottom:8px;
+  background:#fff;
+  box-shadow:0 4px 10px rgba(20,50,34,0.03);
+}
+
+.row:nth-child(odd){
+  background:var(--green-row);
+}
+
+.row.top3{
+  background:#fffdf6;
+  border-color:#eadfb8;
+}
+
+.row.first{
+  background:var(--green-top);
+  border:2px solid #cfe3c6;
+  padding:14px 12px;
+  box-shadow:0 6px 16px rgba(31,93,51,0.08);
+}
+
+.rank{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:14px;
+  color:#fff;
+  background:linear-gradient(180deg, #2f7a3f, #215f31);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.row.top3 .rank{
+  background:linear-gradient(180deg, #e1c577, #c8a74d);
+  color:#222;
+}
+
+.row.first .rank{
+  width:34px;
+  height:34px;
+  font-size:15px;
+}
+
+.name{
+  font-size:16px;
+  font-weight:800;
+  margin:0 0 3px;
+  color:var(--ink);
+  letter-spacing:-0.01em;
+}
+
+.place{
+  font-size:13px;
+  color:var(--muted);
+  margin:0 0 4px;
+  font-weight:700;
+}
+
+.note{
+  font-size:12px;
+  color:#3f5a48;
+  font-weight:600;
+  margin:0;
+  line-height:1.3;
+}
+
+.score{
+  text-align:center;
+  font-weight:800;
+  font-size:14px;
+  background:linear-gradient(180deg, #edf6ea, #dfeedd);
+  border:1px solid var(--score-border);
+  padding:8px;
+  border-radius:11px;
+  color:var(--green-dark);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.65);
+}
+
+.row.first .score{
+  font-size:15px;
+  padding:10px 8px;
+}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:14px;
+  padding:13px 14px 14px;
+  border-top:1px solid var(--line);
+  font-size:11px;
+  color:var(--muted);
+  background:#fff;
+}
+
+.footer b{
+  color:#000;
+}
+
+.footer-copy{
+  max-width:470px;
+  line-height:1.35;
+}
+
+.logo{
+  text-align:right;
+}
+
+.logo img{
+  height:32px;
+  display:block;
+  width:auto;
+}
+
+@media (max-width:600px){
+  body{
+    padding:12px;
+  }
+
+  .header{
+    padding:16px 14px 14px;
+  }
+
+  .header h1{
+    font-size:21px;
+  }
+
+  .subhead{
+    font-size:12px;
+  }
+
+  .callout{
+    font-size:11px;
+  }
+
+  .row{
+    grid-template-columns:36px 1fr 65px;
+    gap:10px;
+    padding:10px 11px;
+  }
+
+  .name{
+    font-size:14px;
+  }
+
+  .note{
+    font-size:11px;
+  }
+
+  .score{
+    font-size:13px;
+  }
+
+  .footer{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .logo{
+    text-align:left;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <p class="eyebrow">Vegas Insider · 2026 Greenest Golf Courses Index</p>
+    <h1>The 10 Greenest Golf Courses in America</h1>
+    <div class="subhead">Based on satellite analysis of 123 U.S. championship courses (April 2026)</div>
+    <div class="callout">Only one course hit a perfect 100.00</div>
+  </div>
+
+  <div class="card">
+    <div class="rows">
+
+      <div class="row top3 first">
+        <div class="rank">1</div>
+        <div>
+          <p class="name">Firestone (South)</p>
+          <p class="place">Akron, Ohio</p>
+          <p class="note">PGA Tour host · immaculate fairways</p>
+        </div>
+        <div class="score">100.00</div>
+      </div>
+
+      <div class="row top3">
+        <div class="rank">2</div>
+        <div>
+          <p class="name">Atlanta Athletic Club</p>
+          <p class="place">Johns Creek, Georgia</p>
+          <p class="note">Major venue · pristine turf</p>
+        </div>
+        <div class="score">98.02</div>
+      </div>
+
+      <div class="row top3">
+        <div class="rank">3</div>
+        <div>
+          <p class="name">Camargo Club</p>
+          <p class="place">Cincinnati, Ohio</p>
+          <p class="note">Seth Raynor design · controlled surfaces</p>
+        </div>
+        <div class="score">98.02</div>
+      </div>
+
+      <div class="row">
+        <div class="rank">4</div>
+        <div>
+          <p class="name">Quail Hollow Club</p>
+          <p class="place">Charlotte, North Carolina</p>
+          <p class="note">PGA Tour stop · fast fairways</p>
+        </div>
+        <div class="score">98.02</div>
+      </div>
+
+      <div class="row">
+        <div class="rank">5</div>
+        <div>
+          <p class="name">Reynolds Lake Oconee</p>
+          <p class="place">Greensboro, Georgia</p>
+          <p class="note">Resort course · elite upkeep</p>
+        </div>
+        <div class="score">98.02</div>
+      </div>
+
+      <div class="row">
+        <div class="rank">6</div>
+        <div>
+          <p class="name">Trump Bedminster</p>
+          <p class="place">Bedminster, New Jersey</p>
+          <p class="note">Championship venue · polished conditions</p>
+        </div>
+        <div class="score">98.02</div>
+      </div>
+
+      <div class="row">
+        <div class="rank">7</div>
+        <div>
+          <p class="name">Caledonia G&amp;FC</p>
+          <p class="place">Pawleys Island, South Carolina</p>
+          <p class="note">Lowcountry course · scenic + manicured</p>
+        </div>
+        <div class="score">97.20</div>
+      </div>
+
+      <div class="row">
+        <div class="rank">8</div>
+        <div>
+          <p class="name">East Lake GC</p>
+          <p class="place">Atlanta, Georgia</p>
+          <p class="note">Tour Championship host · elite turf</p>
+        </div>
+        <div class="score">97.20</div>
+      </div>
+
+      <div class="row">
+        <div class="rank">9</div>
+        <div>
+          <p class="name">Riviera CC</p>
+          <p class="place">Pacific Palisades, California</p>
+          <p class="note">Iconic course · natural + lush</p>
+        </div>
+        <div class="score">97.20</div>
+      </div>
+
+      <div class="row">
+        <div class="rank">10</div>
+        <div>
+          <p class="name">Congressional CC</p>
+          <p class="place">Bethesda, Maryland</p>
+          <p class="note">Major host · immaculate setup</p>
+        </div>
+        <div class="score">96.57</div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <div class="footer-copy">
+        <b>Source:</b> Vegas Insider analysis of 123 U.S. championship golf courses (April 2026)<br>
+        <b>Method:</b> RGB comparison to ideal turf benchmark of 70,170,70.
+      </div>
+
+      <div class="logo">
+        <img src="https://i.postimg.cc/MpcfQB6X/vegas-insider-logo.jpg" alt="Vegas Insider logo">
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
